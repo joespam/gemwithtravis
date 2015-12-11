@@ -1,5 +1,5 @@
 require 'rspec'
-require_relative '../lib/itunes'
+require_relative '../lib/openweather'
 require_relative 'vcr_setup'
 
-CLIENT = openweather.new ENV['OPENWEATHERMAP']
+CLIENT = OpenWeather::Client.new ENV['OPENWEATHERMAP']
