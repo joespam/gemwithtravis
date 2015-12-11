@@ -6,7 +6,7 @@ describe '#client' do
 	end
 
 	it '#current_forecast_by_cityname' do
-		VCR.use_cassette 'search' do
+		VCR.use_cassette 'cfbc' do
 			expect(CLIENT.current_forecast_by_cityname("Philadelphia")).to be_a String
 		end
 	end
