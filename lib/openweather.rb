@@ -2,49 +2,53 @@ require 'net/http'
 require 'json'
 require 'pp'
 
-class OpenWeather
+require_relative './openweather/version'
 
-	def initialize(apikey="")
-		@apikey = apikey
-	end
+module OpenWeather
 
-	def cityname_to_id cityname, country="US"
-		city_file = File.read './city.list.json'
-		city_hash = JSON.parse(city_file)
-		# search city_hash for a hash with record name=city - remove caps first
-	end
+	class Client
 
-	# for a given valid city id, return the 2-5 day forecast
-	#
-	def current_forecast_by_id city_id
+		def initialize(apikey="")
+			@apikey = apikey
+		end
 
-		# pp "I am searching for #{term}"
-		uri = URI("http://api.openweathermap.org/data/2.5/forecast/city?id=#{city_id}&APPID=#{@apikey}")
-		# tell Net::HTTP to GET the URI
-		Net::HTTP.get(uri) # => String
-	end
+		def cityname_to_id cityname, country="US"
+			city_file = File.read './city.list.json'
+			city_hash = JSON.parse(city_file)
+			# search city_hash for a hash with record name=city - remove caps first
+		end
 
-	# for a given valid city name, return the 2-5 day forecast
-	#
-	def current_forecast_by_cityname cityname
+		# for a given valid city id, return the 2-5 day forecast
+		#
+		def current_forecast_by_id city_id
 
-		# puts @apikey
-		# puts "http://api.openweathermap.org/data/2.5/forecast/city?name=#{cityname}&APPID=#{@apikey}"
-		# puts "http://api.openweathermap.org/data/2.5/weather?q=#{cityname}&APPID=#{@apikey}"
-		if cityname != ""
 			# pp "I am searching for #{term}"
-			uri = URI("http://api.openweathermap.org/data/2.5/weather?q=#{cityname}&APPID=#{@apikey}")
-			# uri = URI("http://api.openweathermap.org/data/2.5/forecast/city?name=#{cityname}&APPID=#{@apikey}")
+			uri = URI("http://api.openweathermap.org/data/2.5/forecast/city?id=#{city_id}&APPID=#{@apikey}")
 			# tell Net::HTTP to GET the URI
 			Net::HTTP.get(uri) # => String
 		end
-	end
-	# return a JSON parsed object of whatever you pass in
-	#
-	def parseWrapper results
-		JSON.parse(results)
-	end
 
+		# for a given valid city name, return the 2-5 day forecast
+		#
+		def current_forecast_by_cityname cityname
+
+			# puts @apikey
+			# puts "http://api.openweathermap.org/data/2.5/forecast/city?name=#{cityname}&APPID=#{@apikey}"
+			# puts "http://api.openweathermap.org/data/2.5/weather?q=#{cityname}&APPID=#{@apikey}"
+			if cityname != ""
+				# pp "I am searching for #{term}"
+				uri = URI("http://api.openweathermap.org/data/2.5/weather?q=#{cityname}&APPID=#{@apikey}")
+				# uri = URI("http://api.openweathermap.org/data/2.5/forecast/city?name=#{cityname}&APPID=#{@apikey}")
+				# tell Net::HTTP to GET the URI
+				Net::HTTP.get(uri) # => String
+			end
+		end
+		# return a JSON parsed object of whatever you pass in
+		#
+		def parseWrapper results
+			JSON.parse(results)
+		end
+	end
 end
 
 #
