@@ -7,7 +7,7 @@ describe '#client' do
 
 	it '#current_forecast_by_cityname' do
 		VCR.use_cassette 'search' do
-			expect(CLIENT.current_forecast_by_cityname("Philadelphia")).to be_a Hash
+			expect(CLIENT.current_forecast_by_cityname("Philadelphia")).to be_a String
 		end
 	end
 
